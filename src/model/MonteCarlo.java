@@ -2,6 +2,9 @@ package model;
 
 
 
+import org.jfree.data.category.CategoryDataset;
+import org.jfree.data.category.DefaultCategoryDataset;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -38,7 +41,7 @@ public class MonteCarlo {
         this.arrayLists = arrayLists;
     }
 
-    public void alg(){
+    public CategoryDataset alg(){
         for (ArrayList<Double> arr:arrayLists) {
                 arr.add(basket.getStartValue());
                 Double dt = 1.0 / basket.getDays();
@@ -49,9 +52,16 @@ public class MonteCarlo {
                 arr.add(arr.get(i)*Math.exp(drift+vsqrt*random.nextGaussian()));
             }
         }
+        DefaultCategoryDataset dataset= new DefaultCategoryDataset();
+        int j=0;
+        for (ArrayList<Double> arr:arrayLists) {
 
+            for (int i=0;i<arr.size();i++)
+                dataset.addValue(arr.get(i), Integer.toString(j+1),Integer.toString(i+1));
+            j++;
+        }
 
-
+        return dataset;
     }
 
 
