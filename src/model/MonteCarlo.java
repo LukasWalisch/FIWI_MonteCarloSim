@@ -93,4 +93,13 @@ public class MonteCarlo {
     public double getMax() {
         return max;
     }
+
+    public ArrayList<Double> lastvalues(){
+        ArrayList<Double> ans = new ArrayList<>();
+        for (ArrayList<Double> arr:arrayLists) {
+            ans.add(arr.get(100));
+        }
+        return ans;
+    }
+
 }
