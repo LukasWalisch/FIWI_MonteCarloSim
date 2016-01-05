@@ -26,7 +26,6 @@ public class startGUI extends JFrame {
                 OpenFile openFile = new OpenFile();
                 Stock ans=openFile.importStockFromCSV();
                 System.out.println(ans.getMu() + " " + ans.getSigma() + " " + ans.getPrice());
-                basket.addStock(ans);
                 String amountString = (String)JOptionPane.showInputDialog(root,"StockAmount",0);
                 ans.setAmountComputeStartValue(Integer.parseInt(amountString));
                 basket.addStock(ans);
