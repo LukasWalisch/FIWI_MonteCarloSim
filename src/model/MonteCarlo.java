@@ -20,6 +20,22 @@ public class MonteCarlo {
         }
     }
 
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
+
+    public ArrayList[] getArrayLists() {
+        return arrayLists;
+    }
+
+    public void setArrayLists(ArrayList[] arrayLists) {
+        this.arrayLists = arrayLists;
+    }
+
     public void alg(){
         for (ArrayList<Double> arr:arrayLists) {
                 arr.add(basket.getStartValue());
@@ -31,6 +47,9 @@ public class MonteCarlo {
                 arr.add(arr.get(i)*Math.exp(drift+vsqrt*random.nextGaussian()));
             }
         }
+
+
+
     }
 
 
