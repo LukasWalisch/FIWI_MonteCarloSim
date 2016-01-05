@@ -10,6 +10,8 @@ public class Stock {
     private double price;
     private double mu;
     private double sigma;
+    private int amount;
+    private double startValue;
 
     public Stock(){}
 
@@ -35,5 +37,21 @@ public class Stock {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    public double getStartValue() {
+        return startValue;
+    }
+
+    public void setStartValue(double startValue) {
+        this.startValue = startValue;
     }
 }
