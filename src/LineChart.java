@@ -12,10 +12,10 @@ import org.jfree.ui.ApplicationFrame;
  * Created by lukas on 05.01.2016.
  */
 public class LineChart extends ApplicationFrame implements Runnable {
-    public LineChart(String title, CategoryDataset dataset) {
+    public LineChart(String title, CategoryDataset dataset, double yMin, double yMax) {
         super(title);
         JFreeChart chart = ChartFactory.createLineChart("Monte Carlo Simulation", "Tage", "Aktienwert", dataset, PlotOrientation.VERTICAL, false, false, false);
-        chart.getCategoryPlot().getRangeAxis().setRange(50.0,200.0); //TODO Max und Min Wert einsetzen
+        chart.getCategoryPlot().getRangeAxis().setRange(yMin*0.975,yMax*1.025); //TODO Max und Min Wert einsetzen
         ChartPanel panel = new ChartPanel(chart);
         this.setContentPane(panel);
     }

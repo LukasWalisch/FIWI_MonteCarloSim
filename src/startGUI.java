@@ -44,7 +44,9 @@ public class startGUI extends JFrame {
                 if (basket.getStocks().size() > 0) {
                     MonteCarlo monteCarlo = new MonteCarlo(basket);
                     CategoryDataset dataset = monteCarlo.alg();
-                    LineChart lineChart = new LineChart("Monte Carlo Simulation", dataset);
+                    double min = monteCarlo.getMin();
+                    double max = monteCarlo.getMax();
+                    LineChart lineChart = new LineChart("Monte Carlo Simulation", dataset, min, max);
                     Thread thread = new Thread(lineChart);
                     thread.start();
                 }
