@@ -88,4 +88,8 @@ public class Basket
     public void setStartValue(Double startValue) {
         this.startValue = startValue;
     }
+
+    public ArrayList<Stock> getStocks() {
+        return stocks;
+    }
 }
