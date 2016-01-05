@@ -35,6 +35,8 @@ public class startGUI {
             fileChooser.showOpenDialog(null);
             File file = fileChooser.getSelectedFile();
 
+            //TODO Dialog einfügen und anzahl von aktie speichern
+
             // read last column from csv file
             BufferedReader reader = new BufferedReader(new FileReader(file));
             reader.readLine(); //to skip the first line
