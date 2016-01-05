@@ -45,8 +45,8 @@ public class startGUI extends JFrame {
                     MonteCarlo monteCarlo = new MonteCarlo(basket);
                     CategoryDataset dataset = monteCarlo.alg();
                     LineChart lineChart = new LineChart("Monte Carlo Simulation", dataset);
-                    lineChart.pack();
-                    lineChart.setVisible(true);
+                    Thread thread = new Thread(lineChart);
+                    thread.start();
                 }
             }
         });
