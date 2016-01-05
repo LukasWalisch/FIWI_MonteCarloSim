@@ -89,7 +89,5 @@ public class Basket
         this.startValue = startValue;
     }
 
-    public ArrayList<Stock> getStocks() {
-        return stocks;
-    }
+
 }

@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by lukas on 05.01.2016.
  */
@@ -12,7 +9,6 @@ public class Stock {
     private double sigma;
     private int amount;
     private double startValue;
-
     public Stock(){}
 
     public double getMu() {
