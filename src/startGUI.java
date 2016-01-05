@@ -1,5 +1,7 @@
 import model.Basket;
+import model.MonteCarlo;
 import model.Stock;
+import org.jfree.data.category.CategoryDataset;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -39,8 +41,12 @@ public class startGUI extends JFrame {
         berechnenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (basket.getStocks().size()>0){
-
+                if (basket.getStocks().size() > 0) {
+                    MonteCarlo monteCarlo = new MonteCarlo(basket);
+                    CategoryDataset dataset = monteCarlo.alg();
+                    LineChart lineChart = new LineChart("Monte Carlo Simulation", dataset);
+                    lineChart.pack();
+                    lineChart.setVisible(true);
                 }
             }
         });
