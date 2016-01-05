@@ -46,7 +46,7 @@ public class HelloWorld {
                 Double rendite  = Double.parseDouble(line.split(",")[6]);
                 stock.getRenditenList().add(rendite);
             }
-            return stock;
+            return;
         } catch (Exception e) {
             e.printStackTrace();
             return;
