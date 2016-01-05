@@ -15,7 +15,8 @@ public class MonteCarlo {
 
     private Basket basket;
     private ArrayList[] arrayLists;
-
+    private double min;
+    private double max;
 
     public MonteCarlo(Basket basket){
         this.basket=basket;
@@ -52,6 +53,8 @@ public class MonteCarlo {
                 arr.add(arr.get(i)*Math.exp(drift+vsqrt*random.nextGaussian()));
             }
         }
+        findmax();
+        findmin();
         DefaultCategoryDataset dataset= new DefaultCategoryDataset();
         int j=0;
         for (ArrayList<Double> arr:arrayLists) {
@@ -64,10 +67,30 @@ public class MonteCarlo {
         return dataset;
     }
 
+    private void findmax(){
+        max=Double.MIN_VALUE;
+        for (ArrayList<Double> arr:arrayLists) {
+            for (int i=0;i<arr.size();i++)
+                if (arr.get(i)>max)
+                    max=arr.get(i);
+        }
 
+    }
 
+    private void findmin(){
+        min =Double.MAX_VALUE;
+        for (ArrayList<Double> arr:arrayLists) {
+            for (int i=0;i<arr.size();i++)
+                if (arr.get(i)<min)
+                    min=arr.get(i);
+        }
+    }
 
+    public double getMin() {
+        return min;
+    }
 
-
-
+    public double getMax() {
+        return max;
+    }
 }
