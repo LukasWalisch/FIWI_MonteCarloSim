@@ -7,21 +7,33 @@ import java.util.List;
  * Created by lukas on 05.01.2016.
  */
 public class Stock {
-    private List<Double> renditenList;
+    private double price;
+    private double mu;
+    private double sigma;
 
-    public Stock(){
-        renditenList = new ArrayList<Double>();
+    public Stock(){}
+
+    public double getMu() {
+        return mu;
     }
 
-    public Stock(List<Double> renditenList) {
-        this.renditenList = renditenList;
+    public void setMu(double mu) {
+        this.mu = mu;
     }
 
-    public List<Double> getRenditenList() {
-        return renditenList;
+    public double getSigma() {
+        return sigma;
     }
 
-    public void setRenditenList(List<Double> renditenList) {
-        this.renditenList = renditenList;
+    public void setSigma(double sigma) {
+        this.sigma = sigma;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 }
