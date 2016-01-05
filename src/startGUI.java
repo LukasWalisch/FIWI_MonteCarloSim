@@ -4,6 +4,8 @@ import model.Stock;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class startGUI extends JFrame {
@@ -12,6 +14,8 @@ public class startGUI extends JFrame {
     private JButton button1;
     private JPanel root;
     private JButton berechnenButton;
+    private JButton checkStock;
+    private JList list1;
     private Basket basket = new Basket();
     public startGUI(){
         setContentPane(root);
@@ -21,7 +25,13 @@ public class startGUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 OpenFile openFile = new OpenFile();
                 Stock ans=openFile.importStockFromCSV();
+                System.out.println(ans.getMu() + " " + ans.getSigma() + " " + ans.getPrice());
                 basket.addStock(ans);
+                String amountString = (String)JOptionPane.showInputDialog(root,"StockAmount",0);
+                ans.setAmountComputeStartValue(Integer.parseInt(amountString));
+                basket.addStock(ans);
+                System.out.println(ans.getAmount() + " " + ans.getStartValue());
+                System.out.println(basket.getComputedMu() + " " + basket.getComputedSigma() + " " + basket.getStartValue());
                 //label.setText(String.valueOf(ans));
             }
 
@@ -33,6 +43,13 @@ public class startGUI extends JFrame {
                 if (basket.getStocks().size()>0){
 
                 }
+            }
+        });
+        checkStock.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
             }
         });
     }

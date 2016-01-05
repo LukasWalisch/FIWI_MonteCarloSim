@@ -28,8 +28,9 @@ public class Basket
         {
             Double weight = st.getStartValue()/startValue; //number between 0 and 1
             computedMu += st.getMu()*weight;
-            computedSigma += st.getSigma()*weight;
+            computedSigma += Math.pow(st.getSigma(),2)*Math.pow(weight,2);
         }
+        computedSigma = Math.sqrt(computedSigma);
     }
 
     public void addStock(Stock stock)
@@ -88,6 +89,4 @@ public class Basket
     public void setStartValue(Double startValue) {
         this.startValue = startValue;
     }
-
-
 }

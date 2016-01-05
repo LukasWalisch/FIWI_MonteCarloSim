@@ -35,12 +35,10 @@ public class OpenFile {
             fileChooser.showOpenDialog(null);
             File file = fileChooser.getSelectedFile();
 
-            //TODO Dialog einf�gen und anzahl von aktie speichern
-
             // read last column from csv file
             BufferedReader reader = new BufferedReader(new FileReader(file));
             reader.readLine(); //to skip the first line
-            reader.readLine(); //to skip the second line
+            //reader.readLine(); //to skip the second line
             String line = "";
 
             // get adjClose from CSV
@@ -69,14 +67,14 @@ public class OpenFile {
             //calculate sigma
             double variance = 0;
             for(double a : renditenList){
-                variance = variance + (mu-a)*(a-mu);
+                variance = variance + (mu-a)*(mu-a);
             }
             variance = variance/adjCloseList.size();
             double sigma = Math.sqrt(variance);
             stock.setSigma(sigma);
 
             //price is the last adjClose value
-            stock.setPrice(adjCloseList.get(adjCloseList.size()-1));
+            stock.setPrice(adjCloseList.get(0));
 
             return stock;
 

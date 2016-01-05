@@ -11,6 +11,12 @@ public class Stock {
     private double startValue;
     public Stock(){}
 
+    public void setAmountComputeStartValue(int amount)
+    {
+        this.amount = amount;
+        startValue = this.amount * price;
+    }
+
     public double getMu() {
         return mu;
     }
