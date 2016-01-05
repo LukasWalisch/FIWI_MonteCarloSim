@@ -54,4 +54,5 @@ public class Stock {
     public void setStartValue(double startValue) {
         this.startValue = startValue;
     }
+
 }

@@ -20,7 +20,17 @@ public class Basket
         stocks = new ArrayList<>();
     }
 
-
+    private void computeMuSigmaStart()
+    {
+        computedMu = 0.;
+        computedSigma = 0.;
+        for (Stock st : stocks)
+        {
+            Double weight = st.getStartValue()/startValue; //number between 0 and 1
+            computedMu += st.getMu()*weight;
+            computedSigma += st.getSigma()*weight;
+        }
+    }
 
     public void addStock(Stock stock)
     {
@@ -34,6 +44,48 @@ public class Basket
         }
 
         stocks.add(stock);
+        startValue += stock.getStartValue();
+        computeMuSigmaStart();
 
+    }
+
+    public ArrayList<Stock> getStocks() {
+        return stocks;
+    }
+
+    public void setStocks(ArrayList<Stock> stocks) {
+        this.stocks = stocks;
+    }
+
+    public Integer getDays() {
+        return days;
+    }
+
+    public void setDays(Integer days) {
+        this.days = days;
+    }
+
+    public Double getComputedMu() {
+        return computedMu;
+    }
+
+    public void setComputedMu(Double computedMu) {
+        this.computedMu = computedMu;
+    }
+
+    public Double getComputedSigma() {
+        return computedSigma;
+    }
+
+    public void setComputedSigma(Double computedSigma) {
+        this.computedSigma = computedSigma;
+    }
+
+    public Double getStartValue() {
+        return startValue;
+    }
+
+    public void setStartValue(Double startValue) {
+        this.startValue = startValue;
     }
 }
