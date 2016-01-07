@@ -9,12 +9,21 @@ public class Stock {
     private double sigma;
     private int amount;
     private double startValue;
+    private double weight;
     public Stock(){}
 
     public void setAmountComputeStartValue(int amount)
     {
         this.amount = amount;
         startValue = this.amount * price;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
     }
 
     public double getMu() {

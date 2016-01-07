@@ -1,5 +1,6 @@
 package model;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -9,15 +10,20 @@ public class Basket
 {
     private ArrayList<Stock> stocks;
     private Integer days;
+    private Integer paths;
     private Double computedMu;
     private Double computedSigma;
     private Double startValue;
+    private ArrayList<Korellation> corellations;
+    private JPanel root;
 
-    public Basket()
+    public Basket(JPanel root)
     {
+        this.root = root;
         days = 120;
         startValue = 0.;
         stocks = new ArrayList<>();
+        corellations = new ArrayList<>();
     }
 
     private void computeMuSigmaStart()
@@ -27,11 +33,38 @@ public class Basket
         for (Stock st : stocks)
         {
             Double weight = st.getStartValue()/startValue; //number between 0 and 1
+            st.setWeight(weight);
             computedMu += st.getMu()*weight;
             computedSigma += Math.pow(st.getSigma(),2)*Math.pow(weight,2);
         }
+        if (!corellations.isEmpty())
+        {
+            for (Korellation st : corellations)
+            {
+                computedSigma += 2*st.getStockA().getWeight()*st.getStockB().getWeight()*st.getStockA().getSigma()*st.getStockB().getSigma()*st.getCorellation();
+            }
+        }
         computedSigma = Math.sqrt(computedSigma);
     }
+
+    private void addCore(Stock addy)
+    {
+        for (Stock s : stocks)
+        {
+            boolean right = true;
+            do
+            {
+                try {
+                    right = true;
+                    String corelInput = (String) JOptionPane.showInputDialog(root, "Set Correlation", 0);
+                    Korellation kore = new Korellation(s, addy, Float.parseFloat(corelInput));
+                    if (kore.getCorellation() > 1 || kore.getCorellation() < -1) right = false;
+                    corellations.add(kore);
+                }catch(Exception e){right = false;}
+            }while(!right);
+        }
+    }
+
 
     public void addStock(Stock stock)
     {
@@ -43,7 +76,7 @@ public class Basket
             startValue = stock.getStartValue();
             return;
         }
-
+        if (stocks.size() > 0) addCore(stock);
         stocks.add(stock);
         startValue += stock.getStartValue();
         computeMuSigmaStart();
@@ -88,5 +121,29 @@ public class Basket
 
     public void setStartValue(Double startValue) {
         this.startValue = startValue;
+    }
+
+    public Integer getPaths() {
+        return paths;
+    }
+
+    public void setPaths(Integer paths) {
+        this.paths = paths;
+    }
+
+    public JPanel getRoot() {
+        return root;
+    }
+
+    public void setRoot(JPanel root) {
+        this.root = root;
+    }
+
+    public ArrayList<Korellation> getCorellations() {
+        return corellations;
+    }
+
+    public void setCorellations(ArrayList<Korellation> corellations) {
+        this.corellations = corellations;
     }
 }
