@@ -5,6 +5,7 @@ package model;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -17,11 +18,13 @@ public class MonteCarlo {
     private ArrayList[] arrayLists;
     private double min;
     private double max;
+    private JPanel root;
 
-    public MonteCarlo(Basket basket){
+    public MonteCarlo(Basket basket, JPanel root){
+        this.root = root;
         this.basket=basket;
-        arrayLists= new ArrayList[1000];
-        for (int i=0;i<1000;i++){
+        arrayLists= new ArrayList[basket.getPaths()];
+        for (int i=0;i<basket.getPaths();i++){
             arrayLists[i]=new ArrayList<Double>();
         }
     }
@@ -63,8 +66,37 @@ public class MonteCarlo {
                 dataset.addValue(arr.get(i), Integer.toString(j+1),Integer.toString(i+1));
             j++;
         }
-
+        computeValue();
         return dataset;
+    }
+
+    private void computeValue()
+    {
+        ArrayList<Double> computedList = new ArrayList<>();
+        ArrayList<Double> list = lastvalues();
+        Double expectedValue = 0.;
+        //Call = Summe - StrikePrice
+        //Put = StrikePrice - Summe
+        for (Double d : list)
+        {
+            Double computedDouble = 0.;
+            if (basket.isItsACall())
+            {
+                computedDouble = d - basket.getStrikePrice();
+            }else
+            {
+                computedDouble = basket.getStrikePrice() - d;
+            }
+            if (computedDouble < 0) computedDouble = 0.;
+            computedList.add(computedDouble);
+        }
+
+        for (int i = 0; i < computedList.size();i++)
+        {
+            expectedValue += computedList.get(i);
+        }
+        expectedValue /= computedList.size();
+        basket.setExpectedValue(expectedValue);
     }
 
     private void findmax(){
@@ -97,7 +129,7 @@ public class MonteCarlo {
     public ArrayList<Double> lastvalues(){
         ArrayList<Double> ans = new ArrayList<>();
         for (ArrayList<Double> arr:arrayLists) {
-            ans.add(arr.get(100));
+            ans.add(arr.get(basket.getDays()));
         }
         return ans;
     }

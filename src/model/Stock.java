@@ -5,6 +5,7 @@ package model;
  */
 public class Stock {
     private double price;
+    private String name;
     private double mu;
     private double sigma;
     private int amount;
@@ -66,4 +67,11 @@ public class Stock {
         this.startValue = startValue;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

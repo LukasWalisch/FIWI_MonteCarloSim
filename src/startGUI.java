@@ -17,14 +17,30 @@ public class startGUI extends JFrame {
     private JButton button1;
     private JPanel root;
     private JButton berechnenButton;
-    private JButton checkStock;
     private JRadioButton callRadi;
     private JRadioButton putRadi;
     private JTextField daysInput;
     private JTextField pathsInput;
     private JTextPane metaData;
+    private JTextPane addedStocks;
+    private JButton setStrike;
+    private JTextPane value;
     private Basket basket;
+
+    private void showStocks()
+    {
+        String list = "";
+        for (Stock s : basket.getStocks())
+        {
+            String stockName = s.getName();
+            stockName = stockName.substring(0,stockName.length()-4);
+            list = list + stockName + '\n';
+        }
+        addedStocks.setText(list);
+    }
+
     public startGUI(){
+
         setContentPane(root);
         pack();
         basket = new Basket(root);
@@ -38,6 +54,7 @@ public class startGUI extends JFrame {
                 basket.addStock(ans);
                 String metaDataString = new String("Current µ: " + basket.getComputedMu() + "\nCurrent Sigma: " + basket.getComputedSigma() + "\nCurrent StartValue: " + basket.getStartValue());
                 metaData.setText(metaDataString);
+                showStocks();
                 //label.setText(String.valueOf(ans));
             }
 
@@ -53,6 +70,8 @@ public class startGUI extends JFrame {
                 {
                     basket.setDays(Integer.parseInt(daysInput.getText()));
                     basket.setPaths(Integer.parseInt(pathsInput.getText()));
+                    if (callRadi.isSelected()) basket.setItsACall(true);
+                    if (putRadi.isSelected()) basket.setItsACall(false);
                 }catch(Exception r){System.out.println("wrong format");return;}
                 if (basket.getStocks().size() > 0) {
                     //Hier müssen noch paths, days, knock in, knock out berücksichtigt werden.
@@ -60,20 +79,28 @@ public class startGUI extends JFrame {
                     //Dazu von jedem Pfad den letzten Wert hernehmen, bei einer Call Option (callRadi) diesen MINUS des StartWerts, bei einer Put Option den StartWert minus des letzten wertes.
                     //Sollte der resultierende Wert unter 0 liegen, so wird 0 angenommen. Aus allen Werten den Mittelwert errechnen, dieser stellt den Basketwert dar.
                     //Sollte Knock In oder Knock out eingefügt worden sein, muss berückisichtigt werden, dass  diese Werte bei der Mittelwert berechnung wegfallen.
-                    MonteCarlo monteCarlo = new MonteCarlo(basket);
+                    MonteCarlo monteCarlo = new MonteCarlo(basket,root);
                     CategoryDataset dataset = monteCarlo.alg();
                     double min = monteCarlo.getMin();
                     double max = monteCarlo.getMax();
+                    value.setText(basket.getExpectedValue().toString());
                     LineChart lineChart = new LineChart("Monte Carlo Simulation", dataset, min, max);
                     Thread thread = new Thread(lineChart);
                     thread.start();
                 }
             }
         });
-        checkStock.addMouseListener(new MouseAdapter() {
+
+
+        setStrike.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
+                try
+                {
+                    String strikePrice = (String)JOptionPane.showInputDialog(root,"Set StrikePrice: ",0);
+                    basket.setStrikePrice(Double.parseDouble(strikePrice));
+                }catch (Exception f){return;}
 
             }
         });

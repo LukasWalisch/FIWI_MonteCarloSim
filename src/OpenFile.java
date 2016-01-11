@@ -62,6 +62,7 @@ public class OpenFile {
 
             Stock stock = new Stock();
             double mu = sum/renditenList.size();
+            stock.setName(file.getName());
             stock.setMu(mu);
 
             //calculate sigma

@@ -10,15 +10,19 @@ public class Basket
 {
     private ArrayList<Stock> stocks;
     private Integer days;
+    private boolean itsACall;
     private Integer paths;
     private Double computedMu;
     private Double computedSigma;
     private Double startValue;
     private ArrayList<Korellation> corellations;
     private JPanel root;
+    private Double strikePrice;
+    private Double expectedValue;
 
     public Basket(JPanel root)
     {
+        strikePrice = -1.;
         this.root = root;
         days = 120;
         startValue = 0.;
@@ -56,7 +60,7 @@ public class Basket
             {
                 try {
                     right = true;
-                    String corelInput = (String) JOptionPane.showInputDialog(root, "Set Correlation", 0);
+                    String corelInput = (String) JOptionPane.showInputDialog(root, "Set Correlation (-1 < x < 1) between " + s.getName() + " and " + addy.getName(), 0);
                     Korellation kore = new Korellation(s, addy, Float.parseFloat(corelInput));
                     if (kore.getCorellation() > 1 || kore.getCorellation() < -1) right = false;
                     corellations.add(kore);
@@ -145,5 +149,29 @@ public class Basket
 
     public void setCorellations(ArrayList<Korellation> corellations) {
         this.corellations = corellations;
+    }
+
+    public boolean isItsACall() {
+        return itsACall;
+    }
+
+    public void setItsACall(boolean itsACall) {
+        this.itsACall = itsACall;
+    }
+
+    public Double getStrikePrice() {
+        return strikePrice;
+    }
+
+    public void setStrikePrice(Double strikePrice) {
+        this.strikePrice = strikePrice;
+    }
+
+    public Double getExpectedValue() {
+        return expectedValue;
+    }
+
+    public void setExpectedValue(Double expectedValue) {
+        this.expectedValue = expectedValue;
     }
 }
